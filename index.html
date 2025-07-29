@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DRIVEXA – Your Driving Staffing Partner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #153049;
+      --accent: #2bb6a3;
+      --background: #f7f7f7;
+      --white: #fff;
+      --text: #222;
+      --radius: 16px;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .hidden { display: none !important; }
+    /* Header / Navbar */
+    header {
+      background: var(--white);
+      box-shadow: 0 2px 12px 0 rgba(38,49,89,0.09);
+      padding: 0.7em 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1em;
+      padding-left: 2em;
+    }
+    .logo-img {
+      height: 50px;
+      width: 50px;
+      object-fit: contain;
+    }
+    .brand {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+    }
+    .main-nav {
+      margin-right: 2em;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
+    .main-nav a, .main-nav button {
+      font-weight: 500;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 1.1em;
+      background: none;
+      border: none;
+      border-radius: var(--radius);
+      padding: 0.55em 1.2em;
+      cursor: pointer;
+      transition: background 0.16s, color 0.16s;
+    }
+    .main-nav a.active, .main-nav button.active {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .main-nav .logout-btn {
+      background: var(--primary);
+      color: var(--white);
+      font-weight: 700;
+      transition: background 0.16s;
+      margin-left: 1em;
+    }
+    .main-nav .logout-btn:hover { background: var(--accent); }
+    .main-nav a:hover:not(.active) { color: var(--accent);}
+    /* HERO */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4em 8vw 3.5em 8vw;
+      background: linear-gradient(120deg, var(--primary) 60%, var(--accent) 100%);
+      color: var(--white);
+      border-radius: 0 0 54px 54px;
+      min-height: 410px;
+      box-shadow: 0 12px 50px 0 rgba(38,49,89,0.10);
+    }
+    .hero-content {
+      max-width: 540px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8em;
+    }
+    .hero-title {
+      font-size: 2.85rem;
+      font-weight: 700;
+      margin-bottom: 0.2em;
+      letter-spacing: 0.01em;
+    }
+    .hero-desc {
+      font-size: 1.37rem;
+      opacity: 0.97;
+      line-height: 1.45;
+    }
+    .cta-btns {
+      display: flex;
+      gap: 1.1em;
+      margin-top: 1.5em;
+    }
+    .cta-btn {
+      background: var(--accent);
+      color: var(--white);
+      font-weight: 700;
+      padding: 1em 2.2em;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.16s;
+      box-shadow: 0 2px 16px 0 rgba(43,182,163,0.10);
+    }
+    .cta-btn.secondary {
+      background: var(--white);
+      color: var(--primary);
+      border: 1.5px solid var(--accent);
+    }
+    .cta-btn:hover { background: var(--primary); color: var(--white);}
+    .hero-img {
+      width: 410px;
+      max-width: 43vw;
+      margin-left: 2em;
+      z-index: 1;
+      border-radius: 20px;
+      box-shadow: 0 6px 32px 0 rgba(21,48,73,0.11);
+    }
+    @media (max-width: 950px) {
+      .hero { flex-direction: column; text-align: center; padding: 3em 2vw 2em 2vw; }
+      .hero-content { max-width: none; }
+      .hero-img { margin: 2em 0 0 0; width: 90vw; max-width: 380px;}
+    }
+    /* Description Section */
+    .about-section {
+      background: var(--white);
+      border-radius: 40px;
+      box-shadow: 0 2px 18px 0 rgba(38,49,89,0.07);
+      margin: -42px auto 0 auto;
+      padding: 2.7em 8vw 2.4em 8vw;
+      max-width: 950px;
+      position: relative;
+      top: -38px;
+    }
+    .about-title {
+      color: var(--primary);
+      font-size: 2.1em;
+      font-weight: 700;
+      margin-bottom: 0.5em;
+    }
+    .about-desc {
+      font-size: 1.21em;
+      color: #345;
+      opacity: 0.97;
+      margin-bottom: 1.2em;
+      line-height: 1.6;
+    }
+    /* Features/Impressions */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 2.4em;
+      padding: 3em 8vw;
+      margin-top: 1.5em;
+    }
+    .feature-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px 0 rgba(38,49,89,0.06);
+      padding: 2em 1.2em 1.6em 1.2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      box-shadow: 0 8px 28px 0 rgba(43,182,163,0.13);
+    }
+    .feature-icon {
+      font-size: 2.4rem;
+      margin-bottom: 0.7em;
+      color: var(--accent);
+    }
+    .feature-title {
+      font-weight: 700;
+      font-size: 1.22rem;
+      margin-bottom: 0.5em;
+      color: var(--primary);
+    }
+    .feature-desc {
+      font-size: 1.06rem;
+      opacity: 0.95;
+    }
+    /* Auth Card */
+    .auth-card {
+      max-width: 400px;
+      margin: 4em auto 0 auto;
+      text-align: center;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 26px 0 rgba(38,49,89,0.15);
+      padding: 2.5em 2em 2em 2em;
+    }
+    .auth-card input, .auth-card select {
+      width: 100%;
+      margin: 1em 0;
+      padding: 0.7em;
+      border: 1px solid #d4e6e5;
+      border-radius: var(--radius);
+      font-size: 1.07em;
+      background: #f9fafb;
+      transition: border 0.22s;
+    }
+    .auth-card input:focus, .auth-card select:focus {
+      border: 1.5px solid var(--accent);
+      outline: none;
+    }
+    .auth-card button {
+      background: var(--primary);
+      color: var(--white);
+      font-weight: 700;
+      padding: 0.9em 2em;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.15em;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin: 1em 0 0.2em 0;
+    }
+    .auth-card button.secondary {
+      background: var(--accent);
+      color: var(--white);
+      margin-left: 0.8em;
+    }
+    .auth-card button:hover {
+      background: var(--accent);
+    }
+    .switch-link {
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 1.2em;
+      display: inline-block;
+      text-decoration: underline;
+      transition: color 0.18s;
+    }
+    .switch-link:hover { color: var(--primary); }
+    .otp-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 0.8em;
+      margin: 1.2em 0;
+    }
+    .otp-digit {
+      width: 2.2em;
+      font-size: 1.3em;
+      text-align: center;
+      padding: 0.55em;
+      border: 1.5px solid #2bb6a3;
+      border-radius: 8px;
+      background: #f7f7f7;
+    }
+    .success-msg { color: #2bb6a3; margin: 1em 0 0.3em 0; font-size: 1.15em;}
+    .error-msg { color: #c22; margin: 0.8em 0 0.2em 0; font-size: 1.01em;}
+    /* Main content area */
+    .container {
+      max-width: 900px;
+      margin: 2.5em auto 0 auto;
+      padding: 0 2vw;
+    }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 22px 0 rgba(38,49,89,0.08);
+      padding: 2em 1.7em 2em 1.7em;
+      margin-bottom: 2em;
+    }
+    .page-title {
+      color: var(--primary);
+      font-size: 2em;
+      font-weight: 700;
+      margin-bottom: 0.5em;
+    }
+    .subtitle {
+      color: var(--accent);
+      font-size: 1.13em;
+      margin-bottom: 1em;
+    }
+    /* Job Forms & Lists */
+    .form label {
+      display: block;
+      margin: 1.3em 0 0.4em 0;
+      font-weight: 500;
+    }
+    .form select,
+    .form input,
+    .form textarea {
+      width: 100%;
+      padding: 0.67em;
+      border: 1px solid #d4e6e5;
+      border-radius: var(--radius);
+      font-size: 1em;
+      margin-bottom: 0.6em;
+      background: #f9fafb;
+      transition: border 0.2s;
+    }
+    .form select:focus,
+    .form input:focus,
+    .form textarea:focus {
+      border: 1.5px solid var(--accent);
+      outline: none;
+    }
+    .form button {
+      background: var(--primary);
+      color: var(--white);
+      font-weight: 700;
+      padding: 0.8em 2em;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 1.08em;
+      cursor: pointer;
+      margin-top: 0.5em;
+      transition: background 0.2s;
+    }
+    .form button:hover {
+      background: var(--accent);
+    }
+    .job-listing {
+      padding: 0.7em 1em;
+      border-bottom: 1px solid #ececec;
+    }
+    .job-listing:last-child {
+      border-bottom: none;
+    }
+    .job-title {
+      font-weight: bold;
+      color: var(--primary);
+    }
+    .job-meta {
+      color: #666;
+      font-size: 0.98em;
+    }
+    /* Profile */
+    .profile-info {
+      margin-bottom: 1.5em;
+    }
+    .profile-info dt { font-weight: bold; color: var(--primary);}
+    .profile-info dd { margin: 0 0 0.7em 0;}
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: var(--white);
+      text-align: center;
+      padding: 2em 0 1em 0;
+      margin-top: 3em;
+      border-radius: 44px 44px 0 0;
+      font-size: 1.03em;
+      letter-spacing: 0.02em;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0 1vw; }
+      .card, .auth-card { padding: 1em 0.7em; }
+      .page-title { font-size: 1.3em; }
+      .brand { font-size: 1.2em; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <footer>&copy; 2025 DRIVEXA. All rights reserved.</footer>
+  <script>
+    // --- State ---
+    let user = null; // {type: "driver"|"employer", name, city, ...}
+    let page = "landing"; // "landing", "auth", "dashboard", "jobs", "postjob", "profile"
+    let jobs = [
+      {title:"School Bus Driver",vehicle:"School Bus",type:"Full Time",city:"Delhi",desc:"Drive children to school safely.", poster: "employer", posterName: "SchoolWorks"},
+      {title:"Delivery Rider",vehicle:"Bike",type:"Part Time",city:"Mumbai",desc:"Deliver parcels within city.", poster: "employer", posterName: "QuickEats"},
+      {title:"Auto Driver for Office Pickup",vehicle:"Auto",type:"Full Time",city:"Bangalore",desc:"Pickup/drop office staff, Mon-Fri.", poster: "employer", posterName: "IT Park"},
+      {title:"Tempo Delivery Driver",vehicle:"Tempo",type:"Full Time",city:"All India",desc:"Delivery routes across major Indian cities.", poster: "employer", posterName: "MegaLogistics"},
+    ];
+    let postedJobs = [];
+
+    // --- Utils ---
+    function el(html) {
+      const template = document.createElement('template');
+      template.innerHTML = html.trim();
+      return template.content.firstChild;
+    }
+    function setPage(newPage) {
+      page = newPage; render();
+      window.scrollTo(0,0);
+    }
+    function logout() {
+      user = null; page = "landing"; render();
+    }
+
+    // --- Render functions ---
+    function render() {
+      const app = document.getElementById('app');
+      app.innerHTML = "";
+      // NAV/HEADER
+      app.appendChild(renderHeader());
+      // MAIN PAGES
+      if (page === "landing") {
+        app.appendChild(renderLanding());
+      }
+      else if (page === "auth") {
+        app.appendChild(renderAuth());
+      }
+      else if (user) {
+        const container = el(`<div class="container"></div>`);
+        if (page === "dashboard") container.appendChild(renderDashboard());
+        else if (page === "jobs") container.appendChild(renderJobs());
+        else if (page === "postjob" && user.type === "employer") container.appendChild(renderPostJob());
+        else if (page === "profile") container.appendChild(renderProfile());
+        app.appendChild(container);
+      }
+    }
+
+    function renderHeader() {
+      // Only show nav if user is logged in
+      if (!user) {
+        return el(`
+          <header>
+            <div class="logo-container">
+              <img src="images/drivexalogo.jpg" alt="DRIVEXA logo" class="logo-img">
+              <span class="brand">DRIVEXA</span>
+            </div>
+            <nav class="main-nav">
+              <a href="#" onclick="setPage('landing');return false;">Home</a>
+              <a href="#" onclick="setPage('auth');return false;" class="active">Login / Sign Up</a>
+            </nav>
+          </header>
+        `);
+      }
+      return el(`
+        <header>
+          <div class="logo-container">
+            <img src="images/drivexalogo.jpg" alt="DRIVEXA logo" class="logo-img">
+            <span class="brand">DRIVEXA</span>
+          </div>
+          <nav class="main-nav">
+            <a href="#" onclick="setPage('dashboard');return false;" class="${page === 'dashboard' ? 'active' : ''}">Dashboard</a>
+            <a href="#" onclick="setPage('jobs');return false;" class="${page === 'jobs' ? 'active' : ''}">${user.type === "driver" ? "Find Jobs" : "Jobs"}</a>
+            ${user.type === "employer"
+              ? `<a href="#" onclick="setPage('postjob');return false;" class="${page === 'postjob' ? 'active' : ''}">Post Job</a>`
+              : ''}
+            <a href="#" onclick="setPage('profile');return false;" class="${page === 'profile' ? 'active' : ''}">Profile</a>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+          </nav>
+        </header>
+      `);
+    }
+
+    function renderLanding() {
+      const div = el(`<div></div>`);
+      div.appendChild(el(`
+        <section class="hero">
+          <div class="hero-content">
+            <div class="hero-title">DRIVEXA – Your Driving Staffing Partner</div>
+            <div class="hero-desc">
+              India’s #1 digital platform for connecting professional drivers and employers.<br>
+              Find jobs or hire drivers for every vehicle type: buses, autos, bikes, lorries, tempos, and more, across all major cities.<br>
+              <strong>From school runs to logistics, from delivery to business fleets – discover your next opportunity or workforce here.</strong>
+            </div>
+            <div class="cta-btns">
+              <button class="cta-btn" onclick="setPage('auth')">Login</button>
+              <button class="cta-btn secondary" onclick="setPage('auth')">Sign Up</button>
+            </div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1511918984145-48de785d4c4e?fit=crop&w=600&q=80" alt="Professional drivers" class="hero-img" />
+        </section>
+      `));
+      // Add this section for your new image
+      div.appendChild(el(`
+        <section style="text-align:center; margin:2em 0;">
+          <img src="images/professional.png" alt="Hire a Driver - Driver staffing made easy" style="max-width:420px;width:90%;border-radius:18px;box-shadow:0 4px 24px 0 rgba(38,49,89,0.10);" />
+        </section>
+      `));
+      div.appendChild(el(`
+        <section class="about-section">
+          <div class="about-title">What is DRIVEXA?</div>
+          <div class="about-desc">
+            <strong>DRIVEXA</strong> is a specialized job marketplace for the transportation sector. We connect skilled drivers with trusted employers for a wide range of roles – from bus and auto rickshaw drivers, to delivery riders, logistics drivers, school bus operators, and more.<br><br>
+            <strong>Why choose us?</strong><br>
+            <ul style="margin:0.7em 0 0 1.2em;line-height:1.7;">
+              <li>All vehicle/job types available in every city</li>
+              <li>Verified profiles, secure OTP login, and instant notifications</li>
+              <li>Powerful matching – by city, vehicle, experience, and shift</li>
+              <li>Build your reputation with ratings and reviews</li>
+              <li>Seamless experience for both employers and drivers</li>
+            </ul>
+          </div>
+        </section>
+      `));
+      div.appendChild(renderFeatures());
+      return div;
+    }
+
+    function renderFeatures() {
+      return el(`
+        <section class="features">
+          <div class="feature-card">
+            <div class="feature-icon">🔑</div>
+            <div class="feature-title">Secure OTP Login</div>
+            <div class="feature-desc">Sign up or log in using just your email or phone – easy, safe, and fast.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚚</div>
+            <div class="feature-title">All Vehicle Types</div>
+            <div class="feature-desc">Bus, auto, bike, lorry, tempo, school bus, delivery van – all jobs, everywhere.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🗺️</div>
+            <div class="feature-title">Pan-India Coverage</div>
+            <div class="feature-desc">Work or hire in Mumbai, Delhi, Bangalore, Chennai, Kolkata, Hyderabad, Pune, Ahmedabad – and beyond.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">Smart Matching</div>
+            <div class="feature-desc">Instantly filter by vehicle, city, shift, and more. Find your perfect match.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">⭐</div>
+            <div class="feature-title">Ratings & Reviews</div>
+            <div class="feature-desc">Build trust with transparent feedback for both drivers and employers.</div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <div class="feature-title">Mobile Friendly</div>
+            <div class="feature-desc">A seamless, modern experience on any device – apply or hire on the go.</div>
+          </div>
+        </section>
+      `);
+    }
+
+    // --- AUTH LOGIC ---
+    // Simulate backend OTP
+    function generateOTP() {
+      return String(Math.floor(100000 + Math.random() * 900000));
+    }
+    // Auth state
+    let authStep = 1;  // 1: choose, 2: enterEmail/Phone, 3: OTP, 4: Profile, 5: Done
+    let authMode = "login"; // or "signup"
+    let contactType = "email"; // or "phone"
+    let contactValue = "";
+    let expectedOTP = "";
+    let enteredOTP = "";
+    let authError = "";
+    let userProfile = {
+      name: "",
+      userType: "driver",
+      city: "",
+    };
+
+    function renderAuth() {
+      const div = el('<div class="auth-card"></div>');
+      // STEP 1: Choose Login/Signup and Email/Phone
+      if (authStep === 1) {
+        div.innerHTML = `
+          <img src="images/drivexalogo.jpg" class="logo-img" alt="DRIVEXA Logo" />
+          <h2>Welcome to DRIVEXA</h2>
+          <div style="margin: 1.3em 0 2em 0; font-size:1.13em;">The smarter way to find or fill driving jobs across India.</div>
+          <button onclick="setAuthMode('login')">Login</button>
+          <button class="secondary" onclick="setAuthMode('signup')">Sign Up</button>
+        `;
+      }
+      // STEP 2: Enter Email or Phone
+      else if (authStep === 2) {
+        div.innerHTML = `
+          <img src="images/drivexalogo.jpg" class="logo-img" alt="DRIVEXA Logo" />
+          <h2>${authMode === "login" ? "Login" : "Sign Up"}</h2>
+          <div class="input-inline" style="justify-content:center; margin-bottom:1em;">
+            <button class="${contactType==='email'?'secondary':''}" onclick="setContactType('email');return false;">Email</button>
+            <button class="${contactType==='phone'?'secondary':''}" onclick="setContactType('phone');return false;">Phone</button>
+          </div>
+          <form onsubmit="submitContact(event)">
+            <label>${contactType === "email" ? "Email Address" : "Phone Number"}</label>
+            <input type="${contactType==='email'?'email':'tel'}" id="contact" placeholder="${contactType==='email'?'you@email.com':'9876543210'}" required>
+            <button type="submit">${authMode === "login" ? "Send OTP" : "Get OTP"}</button>
+          </form>
+          <div class="switch-link" onclick="setAuthStep(1)">Back</div>
+        `;
+      }
+      // STEP 3: OTP Verification
+      else if (authStep === 3) {
+        div.innerHTML = `
+          <img src="images/drivexalogo.jpg" class="logo-img" alt="DRIVEXA Logo" />
+          <h2>Enter OTP</h2>
+          <div style="margin-bottom:0.6em;">Sent to <b>${contactValue}</b></div>
+          <form onsubmit="submitOTP(event)">
+            <div class="otp-inputs">
+              ${[0,1,2,3,4,5].map(i=>`<input class="otp-digit" maxlength="1" id="otp${i}" oninput="focusNextOTP(${i})" required>`).join('')}
+            </div>
+            ${authError ? `<div class="error-msg">${authError}</div>` : ""}
+            <button type="submit">Verify OTP</button>
+          </form>
+          <div class="switch-link" onclick="resendOTP()">Resend OTP</div>
+          <div class="switch-link" onclick="setAuthStep(2)">Back</div>
+        `;
+        setTimeout(()=>{document.getElementById('otp0').focus();},100); // Focus first OTP digit
+      }
+      // STEP 4: Profile Creation
+      else if (authStep === 4) {
+        div.innerHTML = `
+          <img src="images/drivexalogo.jpg" class="logo-img" alt="DRIVEXA Logo" />
+          <h2>Complete Your Profile</h2>
+          <form onsubmit="submitProfile(event)">
+            <label>Name</label>
+            <input type="text" id="profName" placeholder="Your Name" required>
+            <label>User Type</label>
+            <select id="profType">
+              <option value="driver">Driver</option>
+              <option value="employer">Employer</option>
+            </select>
+            <label>City</label>
+            <select id="profCity" required>
+              <option value="">Select City</option>
+              <option>All India</option>
+              <option>Mumbai</option>
+              <option>Delhi</option>
+              <option>Bangalore</option>
+              <option>Chennai</option>
+              <option>Kolkata</option>
+              <option>Hyderabad</option>
+              <option>Pune</option>
+              <option>Ahmedabad</option>
+            </select>
+            <button type="submit">Continue</button>
+          </form>
+        `;
+      }
+      // STEP 5: Success
+      else if (authStep === 5) {
+        div.innerHTML = `
+          <img src="images/drivexalogo.jpg" class="logo-img" alt="DRIVEXA Logo" />
+          <div class="success-msg">Account ${authMode==='signup'?'created':'logged in'} successfully!</div>
+          <div style="margin-bottom:1.5em;">Welcome, ${userProfile.name || "User"}!</div>
+          <button onclick="goToDashboard()">Go to Dashboard</button>
+        `;
+      }
+      return div;
+    }
+    // Auth handlers
+    function setAuthMode(mode) { authMode = mode; authStep = 2; render(); }
+    function setContactType(type) { contactType = type; render(); }
+    function setAuthStep(step) { authStep = step; authError = ""; render(); }
+    function submitContact(e) {
+      e.preventDefault();
+      contactValue = document.getElementById('contact').value.trim();
+      if (contactType === 'email' && !/\S+@\S+\.\S+/.test(contactValue)) {
+        alert("Please enter a valid email.");
+        return;
+      }
+      if (contactType === 'phone' && !/^[6-9]\d{9}$/.test(contactValue)) {
+        alert("Please enter a valid 10-digit phone.");
+        return;
+      }
+      expectedOTP = generateOTP();
+      alert(`(Simulated) OTP sent to ${contactValue}: ${expectedOTP}`);
+      authStep = 3; authError = ""; render();
+    }
+    function focusNextOTP(i) {
+      const val = document.getElementById(`otp${i}`).value;
+      if (val && i < 5) document.getElementById(`otp${i+1}`).focus();
+    }
+    function submitOTP(e) {
+      e.preventDefault();
+      enteredOTP = "";
+      for (let i = 0; i < 6; ++i) {
+        enteredOTP += (document.getElementById(`otp${i}`).value || "");
+      }
+      if (enteredOTP === expectedOTP) {
+        authError = "";
+        if (authMode === "signup") { authStep = 4; }
+        else {
+          userProfile = { name: "User", userType: "driver", city: "All India" };
+          authStep = 5;
+        }
+        render();
+      } else {
+        authError = "Invalid OTP. Please try again."; render();
+      }
+    }
+    function resendOTP() {
+      expectedOTP = generateOTP();
+      alert(`(Simulated) OTP resent to ${contactValue}: ${expectedOTP}`);
+    }
+    function submitProfile(e) {
+      e.preventDefault();
+      userProfile = {
+        name: document.getElementById('profName').value.trim() || "User",
+        type: document.getElementById('profType').value,
+        city: document.getElementById('profCity').value
+      };
+      authStep = 5; render();
+    }
+    function goToDashboard() {
+      user = {
+        name: userProfile.name,
+        type: userProfile.userType,
+        city: userProfile.city,
+      };
+      page = user.type === "driver" ? "jobs" : "postjob";
+      // Clear auth state for next time
+      authStep = 1; authMode = "login"; contactType = "email"; contactValue = ""; expectedOTP = ""; enteredOTP = ""; authError = ""; userProfile = {name:"",userType:"driver",city:""};
+      render();
+    }
+    window.setAuthMode = setAuthMode;
+    window.setContactType = setContactType;
+    window.setAuthStep = setAuthStep;
+    window.submitContact = submitContact;
+    window.focusNextOTP = focusNextOTP;
+    window.submitOTP = submitOTP;
+    window.resendOTP = resendOTP;
+    window.submitProfile = submitProfile;
+    window.goToDashboard = goToDashboard;
+
+    // --- DASHBOARD/MAIN PAGES ---
+    function renderDashboard() {
+      return el(`
+        <div>
+          <div class="dashboard-welcome" style="font-size:1.18em;margin-bottom:1.3em;color:var(--accent);">
+            Welcome, ${user.name}! (${user.type === "driver" ? "Driver" : "Employer"}) – City: ${user.city}
+          </div>
+          <div class="card">
+            <div class="page-title">Why DRIVEXA?</div>
+            <div class="features-cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5em;margin-top:1.5em;">
+              <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-title">Secure Profiles</div>
+                <div class="feature-desc">Verified accounts for trust & safety.</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <div class="feature-title">Pan-India Coverage</div>
+                <div class="feature-desc">Work or hire in all major cities, any vehicle type.</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">Smart Matching</div>
+                <div class="feature-desc">Find the best jobs or drivers instantly.</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <div class="feature-title">Ratings & Reviews</div>
+                <div class="feature-desc">Build your reputation on both sides.</div>
+              </div>
+              <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <div class="feature-title">Mobile Friendly</div>
+                <div class="feature-desc">Works great on any device.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
+    }
+    function renderJobs() {
+      // Filters
+      const filterDiv = el(`<div class="card"></div>`);
+      filterDiv.innerHTML = `
+        <div class="page-title">${user.type === "driver" ? "Find Driving Jobs" : "All Jobs"}</div>
+        <form class="form" id="jobFilterForm">
+          <label>City:
+            <select id="filterCity">
+              <option value="">All India</option>
+              <option>Mumbai</option>
+              <option>Delhi</option>
+              <option>Bangalore</option>
+              <option>Chennai</option>
+              <option>Kolkata</option>
+              <option>Hyderabad</option>
+              <option>Pune</option>
+              <option>Ahmedabad</option>
+            </select>
+          </label>
+          <label>Vehicle Type:
+            <select id="filterVehicle">
+              <option value="">All Types</option>
+              <option>Bus</option>
+              <option>Auto</option>
+              <option>Bike</option>
+              <option>Lorry</option>
+              <option>Tempo</option>
+              <option>School Bus</option>
+              <option>Delivery Van</option>
+            </select>
+          </label>
+          <button type="submit">Search</button>
+        </form>
+        <div id="jobResults"></div>
+      `;
+      filterDiv.querySelector("#jobFilterForm").onsubmit = (e) => {
+        e.preventDefault();
+        showJobs();
+      };
+      function showJobs() {
+        const city = filterDiv.querySelector("#filterCity").value;
+        const vehicle = filterDiv.querySelector("#filterVehicle").value;
+        let filtered = jobs;
+        if (city && city !== "All India")
+          filtered = filtered.filter(j => j.city === city || j.city === "All India");
+        if (vehicle)
+          filtered = filtered.filter(j => j.vehicle === vehicle);
+        filterDiv.querySelector("#jobResults").innerHTML = filtered.length
+          ? filtered.map(j => `<div class="job-listing"><span class="job-title">${j.title}</span><br>
+          <span class="job-meta">${j.vehicle}, ${j.type} – ${j.city} | By: ${j.posterName}</span><br>
+          <span>${j.desc}</span></div>`).join('')
+          : "<p>No jobs found.</p>";
+      }
+      showJobs();
+      return filterDiv;
+    }
+    function renderPostJob() {
+      const postDiv = el(`<div class="card"></div>`);
+      postDiv.innerHTML = `
+        <div class="page-title">Post a Driving Job</div>
+        <form class="form" id="postJobForm">
+          <label>Job Title: <input type="text" id="jobTitle" required></label>
+          <label>Vehicle Type:
+            <select id="jobVehicle" required>
+              <option>Bus</option>
+              <option>Auto</option>
+              <option>Bike</option>
+              <option>Lorry</option>
+              <option>Tempo</option>
+              <option>School Bus</option>
+              <option>Delivery Van</option>
+            </select>
+          </label>
+          <label>Type:
+            <select id="jobType" required>
+              <option>Full Time</option>
+              <option>Part Time</option>
+            </select>
+          </label>
+          <label>City:
+            <select id="jobLocation" required>
+              <option value="All India">All India</option>
+              <option>Mumbai">Mumbai</option>
+              <option>Delhi">Delhi</option>
+              <option>Bangalore">Bangalore</option>
+              <option>Chennai">Chennai</option>
+              <option>Kolkata">Kolkata</option>
+              <option>Hyderabad">Hyderabad</option>
+              <option>Pune">Pune</option>
+              <option>Ahmedabad">Ahmedabad</option>
+            </select>
+          </label>
+          <label>Description: <textarea id="jobDesc" required></textarea></label>
+          <button type="submit">Post Job</button>
+        </form>
+        <div id="employerJobs"></div>
+      `;
+      postDiv.querySelector("#postJobForm").onsubmit = (e) => {
+        e.preventDefault();
+        const job = {
+          title: postDiv.querySelector("#jobTitle").value,
+          vehicle: postDiv.querySelector("#jobVehicle").value,
+          type: postDiv.querySelector("#jobType").value,
+          city: postDiv.querySelector("#jobLocation").value,
+          desc: postDiv.querySelector("#jobDesc").value,
+          poster: "employer",
+          posterName: user.name,
+        };
+        jobs.push(job);
+        postedJobs.push(job);
+        postDiv.querySelector("#postJobForm").reset();
+        renderEmployerJobs();
+        render();
+        alert('Job posted!');
+      };
+      function renderEmployerJobs() {
+        postDiv.querySelector("#employerJobs").innerHTML = postedJobs.length
+          ? `<h4>Your Posted Jobs</h4>` + postedJobs.map(j => `<div class="job-listing"><span class="job-title">${j.title}</span> (${j.vehicle}, ${j.type}) – ${j.city}</div>`).join('')
+          : "<p>No jobs posted yet.</p>";
+      }
+      renderEmployerJobs();
+      return postDiv;
+    }
+    function renderProfile() {
+      return el(`
+        <div class="card">
+          <div class="page-title">Your Profile</div>
+          <dl class="profile-info">
+            <dt>Name:</dt><dd>${user.name}</dd>
+            <dt>Account Type:</dt><dd>${user.type === "driver" ? "Driver" : "Employer"}</dd>
+            <dt>City:</dt><dd>${user.city || "(not set)"}</dd>
+          </dl>
+          <div class="subtitle">Coming soon: update your profile, upload documents, view ratings, and more!</div>
+        </div>
+      `);
+    }
+    // On load
+    render();
+    window.setPage = setPage;
+    window.logout = logout;
+  </script>
+</body>
+</html>
